@@ -2,7 +2,7 @@
 title: "Time Series Analysis of Home Sales"
 author: "Joshua Jaeger"
 date: "2022-12-31"
-output: html_document
+output: rmarkdown::github_document
 ---
 
 

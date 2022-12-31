@@ -1,0 +1,77 @@
+---
+title: "Time Series Analysis of Home Sales"
+author: "Joshua Jaeger"
+date: "2022-12-31"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(tsibble)
+library(ggplot2)
+library(lubridate)
+library(tibble)
+library(tsibbledata)
+library(feasts)
+library(fable)
+```
+
+```{r}
+us_home_price <- read.csv("RawData/MSPUS.csv")
+head(us_home_price)
+us_home_price <- rename(us_home_price, Price = MSPUS)
+```
+
+```{r}
+us_home_price <- us_home_price %>%
+  mutate(DATE = yearquarter(DATE)) %>%
+  as_tsibble(index=DATE)
+```
+
+```{r}
+ggplot(us_home_price) +
+  geom_line(aes(x=DATE, y=Price)) +
+  labs(title = "Median US House Price", y= "Price", x=NULL) +
+  theme_minimal()
+```
+
+```{r}
+us_home_price %>%
+  model(STL(Price ~
+              trend() +
+              season(window="periodic"))) %>%
+  components() %>%
+  autoplot()
+```
+
+```{r}
+us_home_sales <- read.csv("RawData/HSN1F.csv") 
+head(us_home_sales)
+  
+
+```
+
+```{r}
+us_home_sales <- us_home_sales %>%
+  rename(Sales = HSN1F) %>%
+  mutate(DATE = yearmonth(DATE)) %>%
+  as_tsibble(index=DATE)
+```
+
+```{r}
+autoplot(us_home_sales,Sales) +
+  theme_minimal() +
+  labs(title = "US Home Sales", x=NULL)
+```
+
+```{r}
+us_home_sales %>%
+  model(
+    STL(Sales ~ 
+          trend() +
+          season())) %>%
+  components() %>%
+  autoplot() 
+  
+```
+

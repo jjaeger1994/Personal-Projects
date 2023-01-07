@@ -73,7 +73,7 @@ ggplot(inflation_prices) +
 
 ```{r}
 inflation_prices %>%
-  model(STL(Price ~
+  model(STL(adjusted_price ~
               trend() +
               season())) %>%
   components() %>%

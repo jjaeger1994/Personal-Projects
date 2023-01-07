@@ -4,10 +4,8 @@ Joshua Jaeger
 2022-12-31
 
 ``` r
-library(dplyr)
+suppressWarnings(library(dplyr))
 ```
-
-    ## Warning: package 'dplyr' was built under R version 4.1.3
 
     ## 
     ## Attaching package: 'dplyr'
@@ -21,10 +19,8 @@ library(dplyr)
     ##     intersect, setdiff, setequal, union
 
 ``` r
-library(tsibble)
+suppressWarnings(library(tsibble))
 ```
-
-    ## Warning: package 'tsibble' was built under R version 4.1.3
 
     ## 
     ## Attaching package: 'tsibble'
@@ -34,20 +30,11 @@ library(tsibble)
     ##     intersect, setdiff, union
 
 ``` r
-library(ggplot2)
+suppressWarnings(library(ggplot2))
+suppressWarnings(library(lubridate))
 ```
-
-    ## Warning: package 'ggplot2' was built under R version 4.1.3
-
-``` r
-library(lubridate)
-```
-
-    ## Warning: package 'lubridate' was built under R version 4.1.3
 
     ## Loading required package: timechange
-
-    ## Warning: package 'timechange' was built under R version 4.1.3
 
     ## 
     ## Attaching package: 'lubridate'
@@ -61,32 +48,16 @@ library(lubridate)
     ##     date, intersect, setdiff, union
 
 ``` r
-library(tibble)
+suppressWarnings(library(tibble))
+suppressWarnings(library(tsibbledata))
+suppressWarnings(library(feasts))
 ```
-
-    ## Warning: package 'tibble' was built under R version 4.1.3
-
-``` r
-library(tsibbledata)
-```
-
-    ## Warning: package 'tsibbledata' was built under R version 4.1.3
-
-``` r
-library(feasts)
-```
-
-    ## Warning: package 'feasts' was built under R version 4.1.3
 
     ## Loading required package: fabletools
 
-    ## Warning: package 'fabletools' was built under R version 4.1.3
-
 ``` r
-library(fable)
+suppressWarnings(library(fable))
 ```
-
-    ## Warning: package 'fable' was built under R version 4.1.3
 
 ``` r
 us_home_price <- read.csv("RawData/MSPUS.csv")

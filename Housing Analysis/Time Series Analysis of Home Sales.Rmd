@@ -8,14 +8,14 @@ output: rmarkdown::github_document
 
 
 ```{r}
-library(dplyr)
-library(tsibble)
-library(ggplot2)
-library(lubridate)
-library(tibble)
-library(tsibbledata)
-library(feasts)
-library(fable)
+suppressWarnings(library(dplyr))
+suppressWarnings(library(tsibble))
+suppressWarnings(library(ggplot2))
+suppressWarnings(library(lubridate))
+suppressWarnings(library(tibble))
+suppressWarnings(library(tsibbledata))
+suppressWarnings(library(feasts))
+suppressWarnings(library(fable))
 ```
 
 ```{r}
@@ -41,16 +41,49 @@ ggplot(us_home_price) +
 us_home_price %>%
   model(STL(Price ~
               trend() +
-              season(window="periodic"))) %>%
+              season())) %>%
   components() %>%
   autoplot()
 ```
 
 ```{r}
+us_cpi <- read.csv("RawData/CPIAUCNS.csv")
+head(us_cpi)
+us_cpi <- us_cpi %>%
+  mutate(adjustedcpi = CPIAUCNS/us_cpi[1,2])
+head(us_cpi)
+```
+
+```{r}
+us_cpi <- us_cpi %>%
+  mutate(DATE = yearquarter(DATE)) %>%
+  as_tsibble(index=DATE)
+
+inflation_prices <- inner_join(us_home_price, us_cpi, by= c("DATE" ="DATE"))
+
+inflation_prices <- mutate(inflation_prices, adjusted_price = Price/adjustedcpi)
+```
+
+```{r}
+ggplot(inflation_prices) +
+  geom_line(aes(x=DATE, y=adjusted_price)) +
+  labs(title = "Median US House Price (Inflation Adjusted)", y= "Inflation Adjusted Price", x=NULL) +
+  theme_minimal()
+```
+
+```{r}
+inflation_prices %>%
+  model(STL(Price ~
+              trend() +
+              season())) %>%
+  components() %>%
+  autoplot()
+```
+
+
+```{r}
 us_home_sales <- read.csv("RawData/HSN1F.csv") 
 head(us_home_sales)
-  
-
 ```
 
 ```{r}

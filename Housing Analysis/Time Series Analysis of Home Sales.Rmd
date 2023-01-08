@@ -110,3 +110,38 @@ us_home_sales %>%
   
 ```
 
+
+
+```{r}
+us_mortgage_rates <- read.csv("RawData/MORTGAGE30US.csv") %>%
+  mutate(DATE = yearmonth(DATE)) %>%
+  as_tsibble(index=DATE)
+
+```
+
+```{r}
+model_data <- left_join(us_home_sales,us_mortgage_rates, by= c("DATE" = "DATE")) 
+model_data
+```
+
+```{r}
+fit <- model_data %>%
+  model(ARIMA(Sales ~ pdq(d = 0)))
+
+report(fit)
+```
+
+```{r}
+model_future <- new_data(model, 20) %>%
+  mutate(MORTGAGE30US = 8.5)
+fit %>%
+  fabletools::forecast(model_future)
+
+head(model_future) 
+```
+
+```{r}
+fit %>%
+  forecast(model_future)
+```
+

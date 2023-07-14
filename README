@@ -1,0 +1,5 @@
+These are a compilation of personal projects I've worked on to test out some of my skills and answer some curiosity based questions. Some of the contents include: 
+Time Series Modeling of Renewable Energy.ipynb - which is an exploration into using RNN from Tensorflow to see if I can predict hourly data using some weather data collected through APIs
+NFL Play Prediction Model.ipynb - An attempt to predict a play based on in game factors
+Rams Data Analysis.ipynb - A simple analysis of the Ram's move to LA, to determine if they received more support in STL than LA.
+Housing Analysis - An attempt to dabble in common time series methods using FRED data
